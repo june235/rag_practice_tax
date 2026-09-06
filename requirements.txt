@@ -3,3 +3,4 @@ python-dotenv==1.2.1
 langchain-core==0.3.86
 langchain-openai==0.3.35
 langchain-pinecone==0.2.13
+langsmith==0.12.1

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_pinecone import PineconeVectorStore
@@ -9,7 +11,10 @@ from langchain_core.prompts import FewShotChatMessagePromptTemplate
 from config import answer_examples
 
 
-load_dotenv("/Users/jjune/rag_LLM/.env")
+load_dotenv()
+legacy_env_file = Path("/Users/jjune/rag_LLM/.env")
+if legacy_env_file.exists():
+    load_dotenv(legacy_env_file)
 
 embedding = OpenAIEmbeddings(
     model="text-embedding-3-large"
