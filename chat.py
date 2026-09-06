@@ -27,8 +27,11 @@ if user_question := st.chat_input(placeholder="소득세에 관련된 궁금한 
 
     with st.chat_message("ai"):
         with st.spinner("답변을 생성하는 중입니다..."):
-            ai_message, rewritten_question, documents = get_ai_message(user_question)
-        st.write(ai_message)
+            ai_response, rewritten_question, documents = get_ai_message(
+                user_question,
+                st.session_state.message_list[:-1],
+            )
+        ai_response = st.write_stream(ai_response)
         with st.expander("답변 근거 확인"):
             st.caption(f"검색에 사용한 질문: {rewritten_question}")
             for document_index, document in enumerate(documents, start=1):
@@ -36,7 +39,7 @@ if user_question := st.chat_input(placeholder="소득세에 관련된 궁금한 
                 st.write(document.page_content)
                 if document.metadata:
                     st.json(document.metadata)
-    st.session_state.message_list.append({"role": "ai", "content": ai_message})
+    st.session_state.message_list.append({"role": "ai", "content": ai_response})
 print(f"after == {st.session_state.message_list}")
 
 
